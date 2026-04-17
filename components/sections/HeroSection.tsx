@@ -121,8 +121,8 @@ export default function HeroSection() {
             <div className="absolute left-0 top-[100px] md:top-[140px] bg-white/96 backdrop-blur-[16px] rounded-[14px] px-3 md:px-[14px] py-2 md:py-[11px] flex items-center gap-2 md:gap-[9px] shadow-brand-lg border border-gray-200 animate-float-y z-10 max-w-[180px] md:max-w-none">
               <span className="text-[18px] md:text-[22px]">🛍️</span>
               <div className="flex flex-col">
-                <strong className="text-[10px] md:text-[11px] font-bold text-gray-900">Chidi just bought</strong>
-                <span className="text-[9px] md:text-[10px] text-gray-500">Airpods Pro — 2 mins ago</span>
+                <strong className="text-[10px] md:text-[11px] font-bold text-white">Chidi just bought</strong>
+                <span className="text-[9px] md:text-[10px] text-gray-300">Airpods Pro — 2 mins ago</span>
               </div>
             </div>
 
