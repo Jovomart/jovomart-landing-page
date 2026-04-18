@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMobileScreen, faBell, faLocationDot, faPercent } from '@fortawesome/free-solid-svg-icons'
 import { faApple, faGooglePlay } from '@fortawesome/free-brands-svg-icons'
@@ -69,7 +70,7 @@ export default function AppSection() {
                 <div className="flex items-center justify-between px-0.5 pb-[10px]">
                   {/* Replace with actual JOVO logo */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/logo.png" alt="JOVO" className="h-5 w-auto object-contain" />
+                  <Image src="/images/Jovo_official_logo.png" alt="JOVO" width={120} height={40} className="h-5 w-20 object-cover" />
                   <FontAwesomeIcon icon={faBell} className="text-[11px] text-gray-400" />
                 </div>
 

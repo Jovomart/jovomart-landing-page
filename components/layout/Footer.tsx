@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInstagram, faXTwitter, faFacebookF, faTiktok, faCcVisa, faCcMastercard } from '@fortawesome/free-brands-svg-icons'
 
@@ -42,13 +43,23 @@ export default function Footer() {
       <div className="max-w-[1300px] mx-auto px-6 pt-[60px] pb-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-[2fr_1fr_1fr_1fr_1fr] gap-8">
         {/* Brand */}
         <div className="footer-brand-span lg:col-span-1 col-span-2 md:col-span-3">
-          <Link href="/" className="inline-flex items-center mb-[14px]" aria-label="JOVO Home">
-            <span className="font-display font-black text-2xl">
-              <span className="gradient-text">J</span>
-              <span className="text-white">OVO</span>
-            </span>
+           {/* Logo */}
+            <Link
+              href="/"
+              className="flex items-center flex-shrink-0 hover:opacity-90 active:scale-[.98] transition-all duration-200"
+              aria-label="JOVO Home"
+            >
+              <Image
+                src="/images/Jovo_off_logo2.png"
+                alt="JOVO Logo"
+                width={120}
+                height={40}
+                className="h-8 sm:h-9 lg:h-10 md:w-40 w-30 object-cover"
+                priority
+              />
           </Link>
-          <p className="text-[13px] text-white/40 leading-[1.7] mb-5 max-w-[240px]">
+          <br />
+          <p className="text-[13px] text-white/40 leading-[1.7] mb-3 max-w-[240px]">
             Nigeria's #1 Campus Marketplace. Built for students, by students.
           </p>
           <div className="flex gap-2" aria-label="JOVO social media">

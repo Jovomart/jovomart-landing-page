@@ -5,10 +5,10 @@ export const PRODUCTS: Product[] = [
   { id: 2, tab: 'electronics', brand: 'Sony', name: 'WH-1000XM5 Headphones', price: 185000, oldPrice: 298000, rating: 4.8, reviews: 512, image: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400&auto=format&fit=crop&q=80', alt: 'Sony WH-1000XM5' },
   { id: 3, tab: 'computing', brand: 'Apple', name: 'MacBook Air M3', price: 1350000, oldPrice: 1600000, rating: 4.9, reviews: 184, image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&auto=format&fit=crop&q=80', alt: 'MacBook Air M3' },
   { id: 4, tab: 'fashion', brand: 'Nike', name: 'Air Jordan 1 Retro High', price: 95000, oldPrice: 130000, rating: 4.7, reviews: 891, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&auto=format&fit=crop&q=80', alt: 'Air Jordan 1' },
-  { id: 5, tab: 'electronics', brand: 'Samsung', name: '65" QLED 4K Smart TV', price: 620000, oldPrice: 820000, rating: 4.8, reviews: 267, image: 'https://images.unsplash.com/photo-1593359677879-a4bb92f4e2f0?w=400&auto=format&fit=crop&q=80', alt: 'Samsung QLED TV' },
+  { id: 5, tab: 'electronics', brand: 'Samsung', name: '65" QLED 4K Smart TV', price: 620000, oldPrice: 820000, rating: 4.8, reviews: 267, image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&auto=format&fit=crop&q=80', alt: 'Samsung QLED TV' },
   { id: 6, tab: 'computing', brand: 'Dell', name: 'XPS 15 Laptop i9', price: 1450000, oldPrice: null, rating: 4.7, reviews: 143, image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&auto=format&fit=crop&q=80', alt: 'Dell XPS 15' },
   { id: 7, tab: 'phones', brand: 'Samsung', name: 'Galaxy Z Fold 5', price: 980000, oldPrice: 1200000, rating: 4.6, reviews: 209, image: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400&auto=format&fit=crop&q=80', alt: 'Galaxy Z Fold 5' },
-  { id: 8, tab: 'fashion', brand: 'Zara', name: 'Premium Linen Shirt', price: 28000, oldPrice: 45000, rating: 4.5, reviews: 432, image: 'https://images.unsplash.com/photo-1594938298603-c8148c4b4d7c?w=400&auto=format&fit=crop&q=80', alt: 'Zara Linen Shirt' },
+  { id: 8, tab: 'fashion', brand: 'Zara', name: 'Premium Linen Shirt', price: 28000, oldPrice: 45000, rating: 4.5, reviews: 432, image: 'https://images.unsplash.com/photo-1751522937993-46b83342398b?w=400&auto=format&fit=crop&q=80', alt: 'Zara Linen Shirt' },
 ]
 
 export const FLASH_PRODUCTS: FlashProduct[] = [

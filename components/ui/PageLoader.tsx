@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 
 export default function PageLoader() {
   const [hidden, setHidden] = useState(false)
@@ -46,8 +47,8 @@ export default function PageLoader() {
       <div className="relative z-10 flex flex-col items-center gap-[18px]">
         {/* Logo */}
         <div className="font-display text-[56px] font-black animate-loader-pulse drop-shadow-[0_0_24px_rgba(255,140,0,.5)]">
-          <span className="gradient-text">J</span>
-          <span className="text-white">OVO</span>
+         <Image src="/images/Jovo_off_logo2.png" alt="JOVO" width={120} height={40} className="h-12 w-60 object-cover" />
+          
         </div>
         <p className="text-white/35 text-[11px] font-medium tracking-[.25em] uppercase">Your Campus Marketplace</p>
 

@@ -1,78 +1,88 @@
-'use client'
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+"use client";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBolt, faHeart, faBagShopping, faUser,
-  faPlug, faMobileScreen, faSpa, faTv, faShirt,
-  faLaptop, faGamepad, faBasketShopping,
-} from '@fortawesome/free-solid-svg-icons'
-import MobileMenu from './MobileMenu'
+  faBolt,
+  faHeart,
+  faBagShopping,
+  faUser,
+  faPlug,
+  faMobileScreen,
+  faSpa,
+  faTv,
+  faShirt,
+  faLaptop,
+  faGamepad,
+  faBasketShopping,
+} from "@fortawesome/free-solid-svg-icons";
+import MobileMenu from "./MobileMenu";
 
-export const CART_EVENT = 'jovo:cart-update'
+export const CART_EVENT = "jovo:cart-update";
 
 const catItems = [
-  { href: '/appliances-deals',  icon: faPlug,           label: 'Appliances'  },
-  { href: '/phone-deals',       icon: faMobileScreen,   label: 'Phones'      },
-  { href: '/beauty-deals',      icon: faSpa,            label: 'Beauty'      },
-  { href: '/electronic-deals',  icon: faTv,             label: 'Electronics' },
-  { href: '/fashion-deals',     icon: faShirt,          label: 'Fashion'     },
-  { href: '/computing-deals',   icon: faLaptop,         label: 'Computing'   },
-  { href: '/gaming-deals',      icon: faGamepad,        label: 'Gaming'      },
-  { href: '/groceries',         icon: faBasketShopping, label: 'Groceries'   },
-]
+  { href: "/appliances-deals", icon: faPlug, label: "Appliances" },
+  { href: "/phone-deals", icon: faMobileScreen, label: "Phones" },
+  { href: "/beauty-deals", icon: faSpa, label: "Beauty" },
+  { href: "/electronic-deals", icon: faTv, label: "Electronics" },
+  { href: "/fashion-deals", icon: faShirt, label: "Fashion" },
+  { href: "/computing-deals", icon: faLaptop, label: "Computing" },
+  { href: "/gaming-deals", icon: faGamepad, label: "Gaming" },
+  { href: "/groceries", icon: faBasketShopping, label: "Groceries" },
+];
 
 const navLinks = [
-  { href: '/shop',          label: 'Shop All'     },
-  { href: '/services',      label: 'Services'     },
-  { href: '/become-seller', label: 'Sell on JOVO' },
-  { href: '/logistics',     label: 'Delivery'     },
-]
+  { href: "/shop", label: "Shop All" },
+  { href: "/services", label: "Services" },
+  { href: "/become-seller", label: "Sell on JOVO" },
+  { href: "/logistics", label: "Delivery" },
+];
 
 export default function Header() {
-  const [scrolled,  setScrolled]  = useState(false)
-  const [menuOpen,  setMenuOpen]  = useState(false)
-  const [cartCount, setCartCount] = useState(0)
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
-    const handler = (e: Event) => setCartCount((e as CustomEvent).detail as number)
-    window.addEventListener(CART_EVENT, handler)
-    return () => window.removeEventListener(CART_EVENT, handler)
-  }, [])
+    const handler = (e: Event) =>
+      setCartCount((e as CustomEvent).detail as number);
+    window.addEventListener(CART_EVENT, handler);
+    return () => window.removeEventListener(CART_EVENT, handler);
+  }, []);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [menuOpen])
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   return (
     <>
       <header
         id="site-header"
         className={[
-          'sticky top-0 left-0 w-full z-[500]',
-          'bg-white/[0.98] backdrop-blur-[24px]',
-          'border-b border-gray-100',
-          'transition-shadow duration-300',
-          'nav-gradient-bar',
-          scrolled ? 'shadow-[0_2px_24px_rgba(0,0,0,.08)]' : '',
-        ].join(' ')}
+          "sticky top-0 left-0 w-full z-[500]",
+          "bg-white/[0.98] backdrop-blur-[24px]",
+          "border-b border-gray-100",
+          "transition-shadow duration-300",
+          "nav-gradient-bar",
+          scrolled ? "shadow-[0_2px_24px_rgba(0,0,0,.08)]" : "",
+        ].join(" ")}
         role="banner"
       >
-
         {/* ══════════════════════ TOP BAR ══════════════════════ */}
         <div className="max-w-[1400px] mx-auto px-4 sm:px-5 lg:px-6 h-[60px] sm:h-[64px] flex items-center">
-
           {/* LEFT — Hamburger + Logo */}
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-
             {/* Hamburger: visible on mobile & tablet, hidden on desktop */}
             <button
               className="lg:hidden flex flex-col justify-center items-center w-9 h-9 rounded-[10px] gap-[5px] hover:bg-gray-100 active:scale-95 transition-all duration-200 flex-shrink-0"
@@ -92,10 +102,14 @@ export default function Header() {
               className="flex items-center flex-shrink-0 hover:opacity-90 active:scale-[.98] transition-all duration-200"
               aria-label="JOVO Home"
             >
-              <span className="font-display font-black leading-none tracking-tight text-[26px] sm:text-[28px] lg:text-[30px]">
-                <span className="gradient-text">J</span>
-                <span className="text-gray-900">OVO</span>
-              </span>
+              <Image
+                src="/images/Jovo_official_logo.png"
+                alt="JOVO Logo"
+                width={120}
+                height={40}
+                className="h-8 sm:h-9 lg:h-10 md:w-40 w-30 object-cover"
+                priority
+              />
             </Link>
           </div>
 
@@ -129,7 +143,6 @@ export default function Header() {
 
           {/* RIGHT — Actions */}
           <div className="flex items-center gap-1 sm:gap-1.5 flex-shrink-0 ml-auto lg:ml-0">
-
             {/* Wishlist — hidden on tiny screens, visible from sm */}
             <Link
               href="/wishlist"
@@ -143,7 +156,7 @@ export default function Header() {
             {/* Cart */}
             <Link
               href="/cart"
-              aria-label={`Shopping cart${cartCount > 0 ? `, ${cartCount} item${cartCount !== 1 ? 's' : ''}` : ''}`}
+              aria-label={`Shopping cart${cartCount > 0 ? `, ${cartCount} item${cartCount !== 1 ? "s" : ""}` : ""}`}
               className="relative flex items-center gap-[5px] px-2.5 sm:px-3 py-2 rounded-[10px] text-[13px] font-semibold text-gray-600 hover:bg-gray-100 hover:text-brand-red transition-colors duration-150"
             >
               <FontAwesomeIcon icon={faBagShopping} className="text-[15px]" />
@@ -153,7 +166,7 @@ export default function Header() {
                   className="absolute -top-[3px] -right-[3px] bg-brand-red text-white text-[9px] font-extrabold min-w-[16px] h-4 px-[3px] rounded-full flex items-center justify-center border-[1.5px] border-white"
                   aria-live="polite"
                 >
-                  {cartCount > 99 ? '99+' : cartCount}
+                  {cartCount > 99 ? "99+" : cartCount}
                 </span>
               )}
             </Link>
@@ -174,28 +187,29 @@ export default function Header() {
         <nav
           aria-label="Product categories"
           className="border-t border-gray-100 overflow-x-auto overflow-y-hidden no-scrollbar"
-          style={{ WebkitOverflowScrolling: 'touch' }}
+          style={{ WebkitOverflowScrolling: "touch" }}
         >
           <div className="max-w-[1400px] mx-auto px-3 sm:px-5 lg:px-6 py-[6px] flex justify-center items-center gap-0.5 w-max min-w-full">
-
             {catItems.map(({ href, icon, label }) => (
               <Link
                 key={href}
                 href={href}
                 className="flex items-center gap-[5px] px-3 sm:px-[13px] py-[5px] sm:py-[6px] rounded-full text-[11.5px] sm:text-[12.5px] font-semibold text-gray-600 whitespace-nowrap hover:bg-gray-100 hover:text-brand-red active:scale-[.95] transition-all duration-150"
               >
-                <FontAwesomeIcon icon={icon} className="text-[11px] sm:text-[12px]" aria-hidden="true" />
+                <FontAwesomeIcon
+                  icon={icon}
+                  className="text-[11px] sm:text-[12px]"
+                  aria-hidden="true"
+                />
                 {/* Labels always visible — no hidden sm:inline */}
                 <span>{label}</span>
               </Link>
             ))}
-
-          
           </div>
         </nav>
       </header>
 
       <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
     </>
-  )
+  );
 }
