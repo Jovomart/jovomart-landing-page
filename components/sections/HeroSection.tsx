@@ -33,7 +33,7 @@ export default function HeroSection() {
 
   return (
     <section
-      className="relative min-h-[calc(100vh-142px)] bg-[#0A0A0A] flex items-center overflow-x-hidden overflow-y-visible px-4 sm:px-6 py-16 sm:py-20 md:py-[70px_24px_90px]"
+      className="relative min-h-[calc(100vh-142px)] bg-[#0A0A0A] flex items-center overflow-hidden px-4 sm:px-6 py-16 sm:py-20 md:py-[70px_24px_90px]"
       aria-label="Welcome to JOVO"
     >
       {/* Orbs - scaled for smaller screens */}
@@ -92,10 +92,10 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Right — floating cards area */}
-        <div className="relative h-[380px] sm:h-[420px] md:h-[480px] overflow-x-auto overflow-y-visible no-scrollbar mt-6 lg:mt-0" aria-hidden="true">
-          {/* Desktop floating cards (hidden on mobile/tablet) */}
-          <div className="relative w-full h-full hidden lg:block">
+        {/* RIGHT SIDE - DESKTOP ONLY (lg screens and above) */}
+        {/* Floating cards area - COMPLETELY REMOVED on mobile/tablet */}
+        <div className="relative hidden lg:block" aria-hidden="true">
+          <div className="relative h-[480px] w-full">
             {floatCards.map((card, i) => (
               <div
                 key={i}
@@ -117,56 +117,27 @@ export default function HeroSection() {
               </div>
             ))}
 
-            {/* Desktop notification - responsive positioning */}
-            <div className="absolute left-0 top-[100px] md:top-[140px] bg-white/96 backdrop-blur-[16px] rounded-[14px] px-3 md:px-[14px] py-2 md:py-[11px] flex items-center gap-2 md:gap-[9px] shadow-brand-lg border border-gray-200 animate-float-y z-10 max-w-[180px] md:max-w-none">
-              <span className="text-[18px] md:text-[22px]">🛍️</span>
+            {/* Desktop notification */}
+            <div className="absolute left-0 top-[140px] bg-white/96 backdrop-blur-[16px] rounded-[14px] px-[14px] py-[11px] flex items-center gap-[9px] shadow-brand-lg border border-gray-200 animate-float-y z-10">
+              <span className="text-[22px]">🛍️</span>
               <div className="flex flex-col">
-                <strong className="text-[10px] md:text-[11px] font-bold text-white">Chidi just bought</strong>
-                <span className="text-[9px] md:text-[10px] text-gray-300">Airpods Pro — 2 mins ago</span>
+                <strong className="text-[11px] font-bold text-gray-900">Chidi just bought</strong>
+                <span className="text-[10px] text-gray-600">Airpods Pro — 2 mins ago</span>
               </div>
             </div>
 
-            {/* Desktop delivery tag - responsive positioning */}
-            <div className="absolute left-3 md:left-6 bottom-8 md:bottom-14 bg-brand-gradient text-white rounded-full px-3 md:px-4 py-2 md:py-[9px] flex items-center gap-1.5 md:gap-[7px] text-[10px] md:text-[12px] font-bold shadow-[0_8px_24px_rgba(180,34,37,.4)] animate-float-y z-10 whitespace-nowrap">
+            {/* Desktop delivery tag */}
+            <div className="absolute left-6 bottom-14 bg-brand-gradient text-white rounded-full px-4 py-[9px] flex items-center gap-[7px] text-[12px] font-bold shadow-[0_8px_24px_rgba(180,34,37,.4)] animate-float-y z-10 whitespace-nowrap">
               <FontAwesomeIcon icon={faTruckFast} className="text-xs" />
               <span>Delivered in <strong>28 min</strong></span>
             </div>
           </div>
-
-          {/* Mobile & Tablet: horizontal scroll cards (visible on lg and below) */}
-          <div className="flex flex-row gap-3 sm:gap-4 w-max px-3 sm:px-4 py-3 lg:hidden">
-            {floatCards.map((card, i) => (
-              <div key={i} className="bg-white rounded-[16px] sm:rounded-[20px] overflow-hidden shadow-brand-xl flex-shrink-0 w-[170px] xs:w-[190px] sm:w-[210px] transition-transform hover:scale-105 duration-300">
-                <div className="relative w-full h-[110px] xs:h-[130px] sm:h-[140px]">
-                  <Image 
-                    src={card.src} 
-                    alt={card.alt} 
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 480px) 170px, (max-width: 640px) 190px, 210px"
-                  />
-                  {card.badge && (
-                    <span className={`absolute top-2 right-2 ${card.badgeClass} text-white text-[9px] sm:text-[10px] font-extrabold px-2 sm:px-[9px] py-1 sm:py-[3px] rounded-full z-10`}>{card.badge}</span>
-                  )}
-                </div>
-                <div className="px-2 sm:px-[10px] py-2 sm:py-2 flex justify-between items-center gap-2">
-                  <span className="text-[10px] sm:text-[11px] font-bold text-gray-900 line-clamp-1">{card.name}</span>
-                  <span className="text-[11px] sm:text-[12px] font-extrabold text-brand-red whitespace-nowrap">{card.price}</span>
-                </div>
-              </div>
-            ))}
-            
-            {/* Extra card for better scrolling experience on mobile */}
-            <div className="bg-gradient-to-br from-brand-red/10 to-brand-orange/10 rounded-[16px] sm:rounded-[20px] flex-shrink-0 w-[170px] xs:w-[190px] sm:w-[210px] flex flex-col items-center justify-center p-3 sm:p-4 border border-white/10">
-              <span className="text-2xl sm:text-3xl mb-1 sm:mb-2">✨</span>
-              <span className="text-[10px] sm:text-[11px] text-white/60 text-center">More deals<br />in shop</span>
-              <FontAwesomeIcon icon={faArrowRight} className="text-white/40 text-xs mt-1 sm:mt-2" />
-            </div>
-          </div>
         </div>
+
+        {/* MOBILE & TABLET: NO right side content at all - completely removed as requested */}
       </div>
 
-        {/* Scroll indicator */}
+      {/* Scroll indicator */}
       <div className="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-[7px] z-10" aria-hidden="true">
         <div className="w-[22px] h-[34px] border-2 border-white/20 rounded-[11px] flex justify-center pt-[5px]">
           <div className="w-[3px] h-[7px] bg-white/50 rounded-sm animate-scroll-wheel" />

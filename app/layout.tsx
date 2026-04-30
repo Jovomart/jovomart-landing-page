@@ -3,6 +3,7 @@ import { Playfair_Display, Sora, JetBrains_Mono } from 'next/font/google'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import './globals.css'
+import PageLoader from '@/components/ui/PageLoader'
 
 // Prevent FA from adding its own CSS (Next.js handles it)
 config.autoAddCss = false
@@ -119,6 +120,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="font-body bg-white text-gray-900 overflow-x-hidden">
+        <PageLoader />
         {children}
       </body>
     </html>
