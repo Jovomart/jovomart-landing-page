@@ -57,7 +57,7 @@ export default function ServicesSection() {
             </h2>
           </div>
           <p className="max-w-[300px] text-[12px] leading-[1.7] text-ink/45" data-animate="fade-up" data-delay="80">
-            Services that make campus life easier — booked and paid in the same place.
+            Services that make campus life easier - booked and paid in the same place.
           </p>
         </div>
 

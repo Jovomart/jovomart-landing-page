@@ -32,7 +32,7 @@ export default function HeroSection() {
   return (
     <section
       className="relative overflow-hidden bg-cream pt-9 sm:pt-12 lg:pt-14"
-      aria-label="JOVO — Nigeria's campus marketplace"
+      aria-label="JOVO - Nigeria's campus marketplace"
     >
       <div className="paper pointer-events-none absolute inset-0" aria-hidden="true" />
       <div
@@ -72,7 +72,7 @@ export default function HeroSection() {
           data-animate="fade-up"
           data-delay="160"
         >
-          Buy and sell anything on campus — verified sellers, 30-minute delivery and
+          Buy and sell anything on campus - verified sellers, 30-minute delivery and
           student-only prices across 50,000+ products.
         </p>
 

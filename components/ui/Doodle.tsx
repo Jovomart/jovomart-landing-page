@@ -5,7 +5,7 @@ interface Props {
 
 /**
  * Decorative, sketch-style composition of marketplace UI cards.
- * Purely ornamental — kept out of the accessibility tree.
+ * Purely ornamental - kept out of the accessibility tree.
  */
 export default function Doodle({ className = '', tone = 'light' }: Props) {
   const dark = tone === 'dark'

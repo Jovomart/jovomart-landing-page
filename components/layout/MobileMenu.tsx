@@ -73,7 +73,7 @@ export default function MobileMenu({ open, onClose }: Props) {
           >
             <span className="flex items-center gap-2">
               <FontAwesomeIcon icon={faBolt} className="text-[11px]" />
-              Flash sale — up to 60% off
+              Flash sale - up to 60% off
             </span>
             <FontAwesomeIcon icon={faArrowRight} className="text-[11px] text-white/60" />
           </Link>

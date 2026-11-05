@@ -19,11 +19,11 @@ export const FLASH_PRODUCTS: FlashProduct[] = [
 ]
 
 export const TESTIMONIALS: Testimonial[] = [
-  { id: 1, name: 'Chukwuemeka Nwosu', role: '200L Computer Science, FUTO', text: 'JOVO changed how I shop on campus. Got my laptop delivered in 25 minutes — insane! The seller was super professional and the price was way better than Jumia.', initial: 'C', avatarColor: '#ff8c00' },
+  { id: 1, name: 'Chukwuemeka Nwosu', role: '200L Computer Science, FUTO', text: 'JOVO changed how I shop on campus. Got my laptop delivered in 25 minutes - insane! The seller was super professional and the price was way better than Jumia.', initial: 'C', avatarColor: '#ff8c00' },
   { id: 2, name: 'Adaeze Okafor', role: 'Verified Seller, 300L Engineering', text: "I've been selling on JOVO for 3 months and made over ₦400k already! The seller dashboard is smooth and payouts hit my account every week without fail.", initial: 'A', avatarColor: '#b42225' },
-  { id: 3, name: 'Tunde Adeleke', role: '400L Medicine, UNILAG', text: 'Flash sales are real on JOVO! Grabbed Airpods at 40% off — couldn\'t believe it. Everything is legit, no scams. The verification system gives real confidence.', initial: 'T', avatarColor: '#3b82f6' },
+  { id: 3, name: 'Tunde Adeleke', role: '400L Medicine, UNILAG', text: 'Flash sales are real on JOVO! Grabbed Airpods at 40% off - couldn\'t believe it. Everything is legit, no scams. The verification system gives real confidence.', initial: 'T', avatarColor: '#3b82f6' },
   { id: 4, name: 'Fatima Aliyu', role: '100L Law, ABU Zaria', text: 'The campus service section helped me find an amazing photographer for my birthday shoot. So affordable and talented. JOVO is really building something special here.', initial: 'F', avatarColor: '#10b981' },
-  { id: 5, name: 'Oluwaseun Balogun', role: '500L Architecture, OAU', text: 'I ordered groceries and a new charger at the same time — both arrived together in under 30 minutes. JOVO logistics is honestly next level for a campus marketplace.', initial: 'O', avatarColor: '#8b5cf6' },
+  { id: 5, name: 'Oluwaseun Balogun', role: '500L Architecture, OAU', text: 'I ordered groceries and a new charger at the same time - both arrived together in under 30 minutes. JOVO logistics is honestly next level for a campus marketplace.', initial: 'O', avatarColor: '#8b5cf6' },
 ]
 
 export const CATEGORIES: Category[] = [

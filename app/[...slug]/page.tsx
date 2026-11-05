@@ -33,8 +33,8 @@ export default function ComingSoon() {
             We&apos;re still stocking this aisle.
           </h1>
           <p className="mx-auto mt-3 max-w-[380px] text-pretty text-[13px] leading-[1.8] text-ink/55">
-            This part of JOVO is being built right now. The good stuff — deals, categories and
-            campus delivery — is waiting on the homepage.
+            This part of JOVO is being built right now. The good stuff - deals, categories and
+            campus delivery - is waiting on the homepage.
           </p>
 
           <div className="mt-7 flex flex-wrap items-center justify-center gap-2.5">

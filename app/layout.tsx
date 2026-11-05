@@ -35,7 +35,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://jovo.ng'),
   title: {
-    default: "JOVO — Nigeria's #1 Campus Marketplace | Buy, Sell & Discover",
+    default: "JOVO - Nigeria's #1 Campus Marketplace | Buy, Sell & Discover",
     template: '%s | JOVO',
   },
   description:
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: 'https://jovo.ng/',
-    title: "JOVO — Nigeria's #1 Campus Marketplace",
+    title: "JOVO - Nigeria's #1 Campus Marketplace",
     description:
       'Shop phones, electronics, fashion & more. Fast campus delivery. 50,000+ products from verified sellers. Flash sales daily.',
     images: [{ url: '/og-image.jpg', width: 1200, height: 630 }],
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@jovong',
-    title: "JOVO — Nigeria's #1 Campus Marketplace",
+    title: "JOVO - Nigeria's #1 Campus Marketplace",
     description: 'Shop phones, electronics, fashion & more. Fast campus delivery. Flash sales daily.',
     images: ['/og-image.jpg'],
   },
@@ -109,7 +109,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   '@type': 'WebPage',
                   '@id': 'https://jovo.ng/#webpage',
                   url: 'https://jovo.ng',
-                  name: "JOVO — Nigeria's #1 Campus Marketplace",
+                  name: "JOVO - Nigeria's #1 Campus Marketplace",
                   isPartOf: { '@id': 'https://jovo.ng/#website' },
                 },
               ],

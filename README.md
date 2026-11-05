@@ -1,6 +1,6 @@
 # JOVO Next.js + Tailwind
 
-Nigeria's #1 Campus Marketplace — converted from vanilla HTML/CSS/JS to **Next.js 14 App Router** with **Tailwind CSS**.
+Nigeria's #1 Campus Marketplace - converted from vanilla HTML/CSS/JS to **Next.js 14 App Router** with **Tailwind CSS**.
 
 ---
 
@@ -82,12 +82,12 @@ Open [http://localhost:3000](http://localhost:3000)
 
 | Feature | Vanilla | Next.js |
 |---|---|---|
-| SEO metadata | Manual `<meta>` tags | `export const metadata` — auto-injected |
-| JSON-LD schema | Inline in HTML | `layout.tsx` — clean & typed |
-| Fonts | Google CDN `<link>` | `next/font/google` — zero layout shift |
-| Images | Plain `<img>` | `next/image` — lazy, responsive, optimised |
+| SEO metadata | Manual `<meta>` tags | `export const metadata` - auto-injected |
+| JSON-LD schema | Inline in HTML | `layout.tsx` - clean & typed |
+| Fonts | Google CDN `<link>` | `next/font/google` - zero layout shift |
+| Images | Plain `<img>` | `next/image` - lazy, responsive, optimised |
 | Code splitting | One big JS file | Automatic per-route + per-component |
-| Cart state | Global `let` var | Custom event bus — works across components |
+| Cart state | Global `let` var | Custom event bus - works across components |
 | TypeScript | ✗ | ✓ Full types for all data models |
 
 ---

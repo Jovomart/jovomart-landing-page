@@ -26,7 +26,7 @@ const steps: { tab: string; title: string; body: string; mock: Mock }[] = [
   {
     tab: 'Check out your way',
     title: 'Pay securely, or pay on delivery',
-    body: 'Pay with card, bank transfer or wallet — or choose pay-on-delivery and inspect your item first. Every payment is held safely until your order lands.',
+    body: 'Pay with card, bank transfer or wallet - or choose pay-on-delivery and inspect your item first. Every payment is held safely until your order lands.',
     mock: 'pay',
   },
   {

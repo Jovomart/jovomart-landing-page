@@ -89,7 +89,7 @@ export default function Footer() {
               Join the JOVO journal
             </h2>
             <p className="mt-2 text-[12.5px] leading-[1.65] text-ink/55">
-              Deals, fresh arrivals and campus-only drops — straight to your inbox.
+              Deals, fresh arrivals and campus-only drops - straight to your inbox.
             </p>
 
             <form

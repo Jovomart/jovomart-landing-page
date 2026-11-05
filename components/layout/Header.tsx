@@ -83,7 +83,7 @@ export default function Header() {
         ].join(' ')}
       >
         <div className="mx-auto flex h-[66px] max-w-[1360px] items-center gap-2 px-4 sm:px-6 lg:h-[74px]">
-          {/* Left — menu + logo */}
+          {/* Left - menu + logo */}
           <div className="flex shrink-0 items-center gap-1.5">
             <button
               onClick={() => setMenuOpen(true)}
@@ -113,7 +113,7 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Centre — floating pill nav */}
+          {/* Centre - floating pill nav */}
           <nav
             aria-label="Main navigation"
             className="mx-auto hidden items-center gap-0.5 rounded-full bg-white/60 p-1 ring-1 ring-ink/[.05] backdrop-blur lg:flex"
@@ -136,7 +136,7 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* Right — actions */}
+          {/* Right - actions */}
           <div className="ml-auto flex shrink-0 items-center gap-0.5 lg:ml-0">
             <Link href="/shop" aria-label="Search products" className={`${iconLink} hidden sm:flex`}>
               <FontAwesomeIcon icon={faMagnifyingGlass} className="text-[13px]" />
