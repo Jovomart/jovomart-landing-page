@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Playfair_Display, Sora, JetBrains_Mono } from 'next/font/google'
+import { Instrument_Sans, Sora, JetBrains_Mono } from 'next/font/google'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import './globals.css'
@@ -7,30 +7,29 @@ import './globals.css'
 // Prevent FA from adding its own CSS (Next.js handles it)
 config.autoAddCss = false
 
-const playfair = Playfair_Display({
+const instrument = Instrument_Sans({
   subsets: ['latin'],
-  weight: ['700', '900'],
-  style: ['normal', 'italic'],
-  variable: '--font-playfair',
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-instrument',
   display: 'swap',
 })
 
 const sora = Sora({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
+  weight: ['300', '400', '500', '600', '700'],
   variable: '--font-sora',
   display: 'swap',
 })
 
 const jetbrains = JetBrains_Mono({
   subsets: ['latin'],
-  weight: ['400', '700'],
+  weight: ['400', '500'],
   variable: '--font-jetbrains',
   display: 'swap',
 })
 
 export const viewport: Viewport = {
-  themeColor: '#B42225',
+  themeColor: '#FBEFE3',
 }
 
 export const metadata: Metadata = {
@@ -73,7 +72,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${sora.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${instrument.variable} ${sora.variable} ${jetbrains.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -118,7 +117,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className="font-body bg-white text-gray-900 overflow-x-hidden">
+      <body className="font-body bg-cream text-ink overflow-x-hidden">
         {children}
       </body>
     </html>

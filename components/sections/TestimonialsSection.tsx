@@ -1,157 +1,123 @@
 'use client'
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft, faChevronRight, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faArrowRight, faStar } from '@fortawesome/free-solid-svg-icons'
 import { TESTIMONIALS } from '@/data'
+import { useScrollAnimations } from '@/hooks/useScrollAnimation'
+import WaveDivider from '@/components/ui/WaveDivider'
+
+const roundBtn =
+  'flex h-9 w-9 items-center justify-center rounded-full bg-white text-ink/50 ring-1 ring-ink/10 transition-all duration-200 hover:bg-ink hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/25 focus-visible:ring-offset-2 focus-visible:ring-offset-white'
 
 export default function TestimonialsSection() {
-  const [current, setCurrent] = useState(0)
-  const [visibleCount, setVisibleCount] = useState(3) // ← stable default for SSR
-  const trackRef = useRef<HTMLDivElement>(null)
-  const autoRef = useRef<ReturnType<typeof setInterval>>()
-  const touchX = useRef(0)
+  useScrollAnimations()
+  const [active, setActive] = useState(0)
+  const testimonial = TESTIMONIALS[active]
 
-  // Only runs on client — no more server/client mismatch
-  useEffect(() => {
-    const update = () => {
-      if (window.innerWidth < 640) setVisibleCount(1)
-      else if (window.innerWidth < 900) setVisibleCount(2)
-      else setVisibleCount(3)
-    }
-    update()
-    window.addEventListener('resize', update)
-    return () => window.removeEventListener('resize', update)
-  }, [])
-
-  const maxIdx = Math.max(0, TESTIMONIALS.length - visibleCount)
-
-  const goTo = useCallback((idx: number) => {
-    const clamped = Math.max(0, Math.min(idx, maxIdx))
-    setCurrent(clamped)
-    if (trackRef.current) {
-      const card = trackRef.current.querySelector<HTMLElement>('.testi-card')
-      const gap = 24
-      const cardW = card ? card.offsetWidth + gap : 0
-      trackRef.current.style.transform = `translateX(-${clamped * cardW}px)`
-    }
-  }, [maxIdx])
-
-  const next = useCallback(() => {
-    goTo(current >= maxIdx ? 0 : current + 1)
-  }, [current, maxIdx, goTo])
-
-  const prev = useCallback(() => {
-    goTo(current > 0 ? current - 1 : maxIdx)
-  }, [current, maxIdx, goTo])
-
-  const resetAuto = useCallback(() => {
-    clearInterval(autoRef.current)
-    autoRef.current = setInterval(next, 4500)
-  }, [next])
-
-  useEffect(() => {
-    autoRef.current = setInterval(next, 4500)
-    return () => clearInterval(autoRef.current)
-  }, [next])
-
-  // Re-clamp current index when visibleCount changes (e.g. on resize)
-  useEffect(() => {
-    goTo(current)
-  }, [visibleCount]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  const dots = Array.from({ length: maxIdx + 1 }, (_, i) => i)
+  const go = (dir: 1 | -1) =>
+    setActive((prev) => (prev + dir + TESTIMONIALS.length) % TESTIMONIALS.length)
 
   return (
-    <section className="py-[60px] bg-white overflow-hidden" aria-label="Customer testimonials">
-      <div className="max-w-[1400px] mx-auto px-6 pb-9 text-center" data-animate="fade-up">
-        <div className="inline-flex items-center text-[10.5px] font-extrabold uppercase tracking-[.2em] text-brand-orange bg-[rgba(255,140,0,.08)] border border-[rgba(255,140,0,.2)] px-[14px] py-[5px] rounded-full mb-3">
-          Community
-        </div>
-        <h2 className="font-display text-[clamp(24px,3vw,38px)] font-black leading-[1.15] text-gray-900 mb-[10px]">
-          Loved by <em className="not-italic text-brand-red">Students</em>
-        </h2>
-        <p className="text-[14.5px] text-gray-500 max-w-[520px] mx-auto leading-[1.75]">
-          Don't take our word for it — here's what our community says.
-        </p>
-      </div>
+    <section className="relative bg-white pb-14 pt-14 sm:pb-20 sm:pt-20" aria-label="Student testimonials">
+      <div className="mx-auto max-w-[1240px] px-5 sm:px-8">
+        <div className="grid gap-6 lg:grid-cols-[1fr_1.15fr] lg:items-end">
+          <h2
+            className="text-balance font-display text-[30px] font-medium leading-[1.05] tracking-[-0.03em] sm:text-[40px]"
+            data-animate="fade-up"
+          >
+            The campus
+            <br className="hidden sm:block" /> loves JOVO.
+          </h2>
 
-      <div className="max-w-[1300px] mx-auto px-6">
-        <div className="overflow-hidden rounded-[28px]">
+          <div data-animate="fade-up" data-delay="80">
+            <p className="text-[11px] font-medium text-ink/40">Explore testimonials:</p>
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {TESTIMONIALS.map((item, i) => (
+                <button
+                  key={item.id}
+                  onClick={() => setActive(i)}
+                  aria-pressed={i === active}
+                  className={`flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/25 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
+                    i === active
+                      ? 'bg-white text-ink shadow-soft ring-1 ring-ink/[.07]'
+                      : 'bg-sand/80 text-ink/45 hover:text-ink/75'
+                  }`}
+                >
+                  <span
+                    className="h-1.5 w-1.5 shrink-0 rounded-full"
+                    style={{ background: item.avatarColor }}
+                    aria-hidden="true"
+                  />
+                  {item.name.split(' ')[0]}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-9 grid gap-6 lg:mt-12 lg:grid-cols-[1.5fr_0.5fr] lg:items-center lg:gap-10">
           <div
-            ref={trackRef}
-            className="testimonials-track"
-            onTouchStart={(e) => { touchX.current = e.touches[0].clientX }}
-            onTouchEnd={(e) => {
-              const diff = touchX.current - e.changedTouches[0].clientX
-              if (Math.abs(diff) > 45) {
-                diff > 0 ? next() : prev()
-                resetAuto()
-              }
-            }}
+            key={testimonial.id}
+            className="animate-pop-in border-l-2 border-ink/15 pl-5 sm:pl-7"
+            aria-live="polite"
           >
-            {TESTIMONIALS.map((t) => (
-              <blockquote
-                key={t.id}
-                className="testi-card flex-shrink-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] bg-[#FFF8F5] border border-gray-200 rounded-[28px] p-7 flex flex-col gap-[14px] hover:-translate-y-1 hover:shadow-brand-md transition-all"
+            <div className="flex items-center gap-1 text-[10px] text-ink/45" aria-label="Rated 5 out of 5">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <FontAwesomeIcon key={i} icon={faStar} aria-hidden="true" />
+              ))}
+            </div>
+
+            <blockquote className="mt-3 text-balance font-display text-[19px] font-normal leading-[1.42] tracking-[-0.015em] text-ink/85 sm:text-[25px]">
+              “{testimonial.text}”
+            </blockquote>
+
+            <footer className="mt-5 flex items-center gap-3">
+              <span
+                className="flex h-9 w-9 items-center justify-center rounded-full text-[12px] font-semibold text-white"
+                style={{ background: testimonial.avatarColor }}
+                aria-hidden="true"
               >
-                <div className="text-[13px] text-brand-orange tracking-[2px]" aria-label="5 stars">
-                  {Array(5).fill(null).map((_, i) => (
-                    <FontAwesomeIcon key={i} icon={faStar} />
-                  ))}
-                </div>
-                <p className="text-[13.5px] text-gray-700 leading-[1.8] flex-1 italic">
-                  "{t.text}"
-                </p>
-                <footer className="flex items-center gap-[11px] mt-auto">
-                  <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-[16px] font-extrabold text-white font-display flex-shrink-0"
-                    style={{ background: t.avatarColor }}
-                  >
-                    {t.initial}
-                  </div>
-                  <div>
-                    <cite className="block text-[13px] font-extrabold text-gray-900 not-italic">{t.name}</cite>
-                    <span className="text-[11px] text-gray-500">{t.role}</span>
-                  </div>
-                </footer>
-              </blockquote>
-            ))}
-          </div>
-        </div>
-
-        {/* Controls */}
-        <div className="flex items-center justify-center gap-4 mt-8">
-          <button
-            onClick={() => { prev(); resetAuto() }}
-            className="w-[42px] h-[42px] rounded-full border border-gray-200 bg-white text-gray-700 flex items-center justify-center text-[14px] hover:border-brand-red hover:text-brand-red hover:bg-[rgba(180,34,37,.05)] hover:scale-105 transition-all"
-            aria-label="Previous testimonial"
-          >
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </button>
-
-          <div className="flex gap-2 items-center" role="tablist">
-            {dots.map((i) => (
-              <button
-                key={i}
-                role="tab"
-                aria-label={`Testimonial ${i + 1}`}
-                onClick={() => { goTo(i); resetAuto() }}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  i === current ? 'w-7 bg-brand-red' : 'w-2 bg-gray-300 hover:bg-brand-orange'
-                }`}
-              />
-            ))}
+                {testimonial.initial}
+              </span>
+              <div className="min-w-0">
+                <cite className="block truncate text-[12.5px] font-semibold not-italic text-ink">
+                  {testimonial.name}
+                </cite>
+                <span className="block truncate text-[11px] text-ink/40">{testimonial.role}</span>
+              </div>
+              <div className="ml-auto flex gap-1.5">
+                <button onClick={() => go(-1)} aria-label="Previous testimonial" className={roundBtn}>
+                  <FontAwesomeIcon icon={faArrowLeft} className="text-[10px]" />
+                </button>
+                <button onClick={() => go(1)} aria-label="Next testimonial" className={roundBtn}>
+                  <FontAwesomeIcon icon={faArrowRight} className="text-[10px]" />
+                </button>
+              </div>
+            </footer>
           </div>
 
-          <button
-            onClick={() => { next(); resetAuto() }}
-            className="w-[42px] h-[42px] rounded-full border border-gray-200 bg-white text-gray-700 flex items-center justify-center text-[14px] hover:border-brand-red hover:text-brand-red hover:bg-[rgba(180,34,37,.05)] hover:scale-105 transition-all"
-            aria-label="Next testimonial"
-          >
-            <FontAwesomeIcon icon={faChevronRight} />
-          </button>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+            <div className="rounded-[24px] bg-lilac p-5 sm:p-6">
+              <p className="font-display text-[32px] font-medium leading-none tracking-tight text-ink">
+                4.9<span className="ml-1 text-[14px] align-top">★</span>
+              </p>
+              <p className="mt-2 text-[11px] leading-[1.6] text-ink/60">
+                from 1,200+ verified student reviews
+              </p>
+            </div>
+            <div className="rounded-[24px] bg-mint p-5 sm:p-6">
+              <p className="font-display text-[32px] font-medium leading-none tracking-tight text-ink">
+                50K+
+              </p>
+              <p className="mt-2 text-[11px] leading-[1.6] text-ink/60">
+                students buying and selling every month
+              </p>
+            </div>
+          </div>
         </div>
       </div>
+
+      <WaveDivider fill="#F7F3EC" className="mt-12 sm:mt-16" />
     </section>
   )
 }

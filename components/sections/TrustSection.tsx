@@ -1,25 +1,51 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShieldHalved, faTruckFast, faRotateLeft, faLock } from '@fortawesome/free-solid-svg-icons'
+import {
+  faShieldHalved,
+  faTruckFast,
+  faRotateLeft,
+  faLock,
+} from '@fortawesome/free-solid-svg-icons'
 
 const items = [
-  { icon: faShieldHalved, title: 'Verified Sellers', desc: 'Every seller on JOVO is ID-verified and campus-authenticated for your safety.' },
-  { icon: faTruckFast, title: 'Express Delivery', desc: 'Get your orders delivered anywhere on campus in under 30 minutes.' },
-  { icon: faRotateLeft, title: 'Easy Returns', desc: 'Not satisfied? Return within 7 days, no questions asked.' },
-  { icon: faLock, title: 'Secure Payments', desc: 'Pay securely online or opt for pay-on-delivery — your choice.' },
+  {
+    icon: faShieldHalved,
+    title: 'Verified sellers',
+    desc: 'Every seller is ID-checked and campus-verified before they can list a single item.',
+  },
+  {
+    icon: faTruckFast,
+    title: '30-minute delivery',
+    desc: 'Riders on every campus. From seller to hostel in under half an hour, tracked live.',
+  },
+  {
+    icon: faRotateLeft,
+    title: '7-day returns',
+    desc: 'Changed your mind? Send it back within a week, no questions asked.',
+  },
+  {
+    icon: faLock,
+    title: 'Protected payments',
+    desc: 'Pay online or on delivery. Funds only release once you confirm the order.',
+  },
 ]
 
 export default function TrustSection() {
   return (
-    <section className="bg-[#FFF8F5] border-t border-b border-gray-200" aria-label="Why trust JOVO">
-      <div className="max-w-[1400px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-gray-200">
-        {items.map(({ icon, title, desc }) => (
-          <article key={title} className="bg-[#FFF8F5] hover:bg-white transition-colors p-6 flex items-start gap-4">
-            <div className="w-11 h-11 rounded-[14px] bg-brand-gradient text-white flex items-center justify-center text-[18px] shadow-red-glow flex-shrink-0">
-              <FontAwesomeIcon icon={icon} />
-            </div>
+    <section className="bg-white pb-4 pt-10 sm:pt-14" aria-label="Why shop with JOVO">
+      <div className="mx-auto grid max-w-[1240px] gap-x-8 gap-y-7 px-5 sm:grid-cols-2 sm:px-8 lg:grid-cols-4">
+        {items.map(({ icon, title, desc }, i) => (
+          <article
+            key={title}
+            className="flex items-start gap-3"
+            data-animate="fade-up"
+            data-delay={i * 70}
+          >
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand text-[13px] text-ink/65">
+              <FontAwesomeIcon icon={icon} aria-hidden="true" />
+            </span>
             <div>
-              <h3 className="text-[13.5px] font-extrabold text-gray-900 mb-[3px]">{title}</h3>
-              <p className="text-[12px] text-gray-500 leading-[1.6]">{desc}</p>
+              <h3 className="text-[13px] font-semibold tracking-tight text-ink">{title}</h3>
+              <p className="mt-1 text-[12px] leading-[1.65] text-ink/45">{desc}</p>
             </div>
           </article>
         ))}

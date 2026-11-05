@@ -1,129 +1,215 @@
+'use client'
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faInstagram, faXTwitter, faFacebookF, faTiktok, faCcVisa, faCcMastercard } from '@fortawesome/free-brands-svg-icons'
+import { faInstagram, faXTwitter, faFacebookF, faTiktok } from '@fortawesome/free-brands-svg-icons'
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
+import { showToast } from '@/components/ui/toast'
+import Doodle from '@/components/ui/Doodle'
+
+const columns = [
+  {
+    title: 'Shop',
+    links: [
+      { href: '/phone-deals', label: 'Phones & tablets' },
+      { href: '/electronic-deals', label: 'Electronics' },
+      { href: '/fashion-deals', label: 'Fashion' },
+      { href: '/computing-deals', label: 'Computing' },
+      { href: '/gaming-deals', label: 'Gaming' },
+      { href: '/beauty-deals', label: 'Health & beauty' },
+      { href: '/groceries', label: 'Groceries' },
+      { href: '/flash-sales', label: 'Flash sales' },
+    ],
+  },
+  {
+    title: 'Sell',
+    links: [
+      { href: '/become-seller', label: 'Become a seller' },
+      { href: '/seller/login', label: 'Seller login' },
+      { href: '/seller/dashboard', label: 'Seller dashboard' },
+      { href: '/seller/application-status', label: 'Seller status' },
+      { href: '/logistics', label: 'Delivery & logistics' },
+      { href: '/services', label: 'Campus services' },
+      { href: '/accommodations', label: 'Accommodation' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { href: '/about', label: 'About JOVO' },
+      { href: '/help', label: 'Help centre' },
+      { href: '/contact', label: 'Contact us' },
+      { href: '/terms', label: 'Terms of service' },
+      { href: '/privacy', label: 'Privacy policy' },
+      { href: '/blog', label: 'Blog' },
+    ],
+  },
+]
+
+const socials = [
+  { href: 'https://instagram.com/jovong', icon: faInstagram, label: 'Instagram' },
+  { href: 'https://twitter.com/jovong', icon: faXTwitter, label: 'Twitter / X' },
+  { href: 'https://facebook.com/jovong', icon: faFacebookF, label: 'Facebook' },
+  { href: 'https://tiktok.com/@jovong', icon: faTiktok, label: 'TikTok' },
+]
 
 export default function Footer() {
   const year = new Date().getFullYear()
+  const [email, setEmail] = useState('')
+  const [submitted, setSubmitted] = useState(false)
 
-  const shopLinks = [
-    { href: '/phone-deals', label: 'Phones & Tablets' },
-    { href: '/electronic-deals', label: 'Electronics' },
-    { href: '/fashion-deals', label: 'Fashion' },
-    { href: '/computing-deals', label: 'Computing' },
-    { href: '/gaming-deals', label: 'Gaming' },
-    { href: '/beauty-deals', label: 'Health & Beauty' },
-    { href: '/groceries', label: 'Groceries' },
-    { href: '/flash-sales', label: 'Flash Sales' },
-  ]
-  const serviceLinks = [
-    { href: '/services', label: 'Campus Services' },
-    { href: '/logistics', label: 'Logistics & Delivery' },
-    { href: '/accommodations', label: 'Accommodation' },
-    { href: '/personal-care', label: 'Personal Care' },
-    { href: '/cleaning-hygiene', label: 'Cleaning & Hygiene' },
-  ]
-  const sellerLinks = [
-    { href: '/become-seller', label: 'Become a Seller' },
-    { href: '/seller/login', label: 'Seller Login' },
-    { href: '/seller/dashboard', label: 'Seller Dashboard' },
-    { href: '/seller/application-status', label: 'Seller Status' },
-  ]
-  const companyLinks = [
-    { href: '/about', label: 'About JOVO' },
-    { href: '/help', label: 'Help Center' },
-    { href: '/contact', label: 'Contact Us' },
-    { href: '/terms', label: 'Terms of Service' },
-    { href: '/privacy', label: 'Privacy Policy' },
-    { href: '/blog', label: 'Blog' },
-  ]
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
+    if (!valid) {
+      showToast('Please enter a valid email address', 'error')
+      return
+    }
+    setSubmitted(true)
+    showToast("🎉 You're subscribed! Welcome to JOVO deals.", 'success')
+    setTimeout(() => {
+      setSubmitted(false)
+      setEmail('')
+    }, 3000)
+  }
 
   return (
-    <footer className="bg-[#0A0A0A] text-white/70" role="contentinfo">
-      <div className="max-w-[1300px] mx-auto px-6 pt-[60px] pb-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-[2fr_1fr_1fr_1fr_1fr] gap-8">
-        {/* Brand */}
-        <div className="footer-brand-span lg:col-span-1 col-span-2 md:col-span-3">
-           {/* Logo */}
-            <Link
-              href="/"
-              className="flex items-center flex-shrink-0 hover:opacity-90 active:scale-[.98] transition-all duration-200"
-              aria-label="JOVO Home"
+    <footer className="relative overflow-hidden bg-ink text-white/50" role="contentinfo">
+      <Doodle
+        tone="dark"
+        className="pointer-events-none absolute -bottom-24 right-[-40px] hidden w-[420px] opacity-50 md:block"
+      />
+
+      <div className="relative mx-auto max-w-[1320px] px-5 pb-8 pt-14 sm:px-8 sm:pt-20">
+        <div className="grid gap-9 lg:grid-cols-[1.15fr_1fr_1fr_1fr] lg:gap-8">
+          {/* Newsletter card */}
+          <div className="rounded-[26px] bg-cream px-5 py-6 text-ink sm:px-6">
+            <h2 className="font-display text-[21px] font-medium leading-tight tracking-[-0.02em]">
+              Join the JOVO journal
+            </h2>
+            <p className="mt-2 text-[12.5px] leading-[1.65] text-ink/55">
+              Deals, fresh arrivals and campus-only drops — straight to your inbox.
+            </p>
+
+            <form
+              onSubmit={handleSubmit}
+              className="mt-4 flex items-center gap-1.5 rounded-full bg-white p-1.5"
+              noValidate
             >
-              <Image
-                src="/images/Jovo_off_logo2.png"
-                alt="JOVO Logo"
-                width={120}
-                height={40}
-                className="h-8 sm:h-9 lg:h-10 md:w-40 w-30 object-cover"
-                priority
+              <label htmlFor="footer-email" className="sr-only">
+                Email address
+              </label>
+              <input
+                id="footer-email"
+                type="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+                aria-required="true"
+                autoComplete="email"
+                className="min-w-0 flex-1 rounded-full bg-transparent px-3 py-1.5 text-[12.5px] text-ink placeholder:text-ink/35"
               />
-          </Link>
-          <br />
-          <p className="text-[13px] text-white/40 leading-[1.7] mb-3 max-w-[240px]">
-            Nigeria's #1 Campus Marketplace. Built for students, by students.
-          </p>
-          <div className="flex gap-2" aria-label="JOVO social media">
-            {[
-              { href: 'https://instagram.com/jovong', icon: faInstagram, label: 'Instagram' },
-              { href: 'https://twitter.com/jovong', icon: faXTwitter, label: 'Twitter/X' },
-              { href: 'https://facebook.com/jovong', icon: faFacebookF, label: 'Facebook' },
-              { href: 'https://tiktok.com/@jovong', icon: faTiktok, label: 'TikTok' },
-            ].map(({ href, icon, label }) => (
-              <a
-                key={href}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="w-9 h-9 rounded-[8px] border border-white/10 bg-white/[.05] text-white/50 flex items-center justify-center text-[13px] hover:bg-brand-gradient hover:text-white hover:border-transparent transition-all"
+              <button
+                type="submit"
+                className="flex shrink-0 items-center gap-1.5 rounded-full bg-lilac px-3.5 py-2 text-[12px] font-semibold text-ink transition-colors duration-200 hover:bg-lilac-deep"
               >
-                <FontAwesomeIcon icon={icon} />
-              </a>
-            ))}
+                {submitted ? (
+                  <>
+                    <FontAwesomeIcon icon={faCircleCheck} className="text-[10px]" />
+                    Done
+                  </>
+                ) : (
+                  'Subscribe'
+                )}
+              </button>
+            </form>
+
+            <p className="mt-2.5 text-[10.5px] leading-relaxed text-ink/40">
+              No spam. Unsubscribe anytime.
+            </p>
           </div>
-        </div>
 
-        {/* Columns */}
-        {[
-          { title: 'Shop', links: shopLinks, label: 'Shop links' },
-          { title: 'Services', links: serviceLinks, label: 'Services links' },
-          { title: 'Sellers', links: sellerLinks, label: 'Seller links' },
-          { title: 'Company', links: companyLinks, label: 'Company links' },
-        ].map(({ title, links, label }) => (
-          <nav key={title} aria-label={label}>
-            <h4 className="text-[11.5px] font-extrabold text-white uppercase tracking-[.12em] mb-4">{title}</h4>
-            <ul className="flex flex-col gap-[9px]">
-              {links.map(({ href, label: linkLabel }) => (
-                <li key={href}>
-                  <Link href={href} className="text-[13px] text-white/40 hover:text-brand-orange transition-colors">
-                    {linkLabel}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        ))}
-      </div>
-
-      {/* Bottom */}
-      <div className="border-t border-white/[.07] max-w-[1300px] mx-auto px-6 py-5 flex flex-wrap items-center justify-between gap-[14px]">
-        <p className="text-[12px] text-white/30">
-          &copy; {year} JOVO Technologies Ltd. All rights reserved.
-        </p>
-        <div className="flex gap-[18px]">
-          {[{ href: '/terms', label: 'Terms' }, { href: '/privacy', label: 'Privacy' }, { href: '/cookies', label: 'Cookies' }].map(({ href, label }) => (
-            <Link key={href} href={href} className="text-[12px] text-white/30 hover:text-white/70 transition-colors">{label}</Link>
+          {/* Link columns */}
+          {columns.map(({ title, links }) => (
+            <nav key={title} aria-label={`${title} links`} className="min-w-0">
+              <h3 className="text-[11px] font-semibold uppercase tracking-[.16em] text-white/80">
+                {title}
+              </h3>
+              <ul className="mt-3.5 grid grid-cols-2 gap-x-4 gap-y-2 lg:grid-cols-1">
+                {links.map(({ href, label }) => (
+                  <li key={href}>
+                    <Link
+                      href={href}
+                      className="text-[12px] leading-snug text-white/45 transition-colors duration-200 hover:text-white"
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           ))}
         </div>
-        <div className="flex gap-[7px] items-center" aria-label="Payment methods">
-          <span className="bg-white/10 rounded-[8px] px-[9px] py-1 text-[13px] text-white/60">
-            <FontAwesomeIcon icon={faCcVisa} />
-          </span>
-          <span className="bg-white/10 rounded-[8px] px-[9px] py-1 text-[13px] text-white/60">
-            <FontAwesomeIcon icon={faCcMastercard} />
-          </span>
-          <span className="bg-white/10 rounded-[8px] px-[9px] py-1 text-[11px] text-white/60">Bank</span>
-          <span className="bg-white/10 rounded-[8px] px-[9px] py-1 text-[11px] text-white/60">COD</span>
+
+        {/* Socials */}
+        <div className="mt-9 flex flex-wrap items-center gap-2">
+          <span className="text-[11px] text-white/35">Follow JOVO</span>
+          {socials.map(({ href, icon, label }) => (
+            <a
+              key={href}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={label}
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-white/[.07] text-[12px] text-white/55 transition-colors duration-200 hover:bg-white hover:text-ink"
+            >
+              <FontAwesomeIcon icon={icon} />
+            </a>
+          ))}
+        </div>
+
+        {/* Bottom bar */}
+        <div className="mt-8 flex flex-col gap-5 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <Link
+              href="/"
+              aria-label="JOVO home"
+              className="inline-flex items-center rounded-full bg-cream px-3 py-1.5 transition-opacity hover:opacity-90"
+            >
+              <Image
+                src="/images/Jovo_official_logo.png"
+                alt="JOVO"
+                width={160}
+                height={40}
+                className="h-6 w-[104px] object-cover"
+              />
+            </Link>
+            <p className="text-[11.5px] text-white/30">
+              &copy; {year} JOVO Technologies Ltd.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            {[
+              { href: '/terms', label: 'Terms' },
+              { href: '/privacy', label: 'Privacy' },
+              { href: '/cookies', label: 'Cookies' },
+            ].map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="text-[11.5px] text-white/35 transition-colors hover:text-white/80"
+              >
+                {label}
+              </Link>
+            ))}
+            <span className="text-[11px] text-white/30">
+              Visa · Mastercard · Bank · COD
+            </span>
+          </div>
         </div>
       </div>
     </footer>

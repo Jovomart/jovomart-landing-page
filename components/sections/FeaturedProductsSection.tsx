@@ -1,116 +1,144 @@
 'use client'
-import { useState, useRef } from 'react'
+import { useRef, useState } from 'react'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft, faChevronRight, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { PRODUCTS } from '@/data'
 import ProductCard from '@/components/ui/ProductCard'
 import type { Product } from '@/types'
+import WaveDivider from '@/components/ui/WaveDivider'
 
 const TABS = [
-  { label: 'All Products', value: 'all' },
-  { label: ' Phones', value: 'phones' },
-  { label: ' Electronics', value: 'electronics' },
-  { label: ' Fashion', value: 'fashion' },
-  { label: ' Computing', value: 'computing' },
+  { label: 'All', value: 'all' },
+  { label: 'Phones', value: 'phones' },
+  { label: 'Electronics', value: 'electronics' },
+  { label: 'Fashion', value: 'fashion' },
+  { label: 'Computing', value: 'computing' },
 ]
+
+const roundBtn =
+  'flex h-10 w-10 items-center justify-center rounded-full bg-white text-ink/55 ring-1 ring-ink/10 transition-all duration-200 hover:bg-ink hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/25 focus-visible:ring-offset-2 focus-visible:ring-offset-white'
 
 export default function FeaturedProductsSection() {
   const [activeTab, setActiveTab] = useState('all')
   const [fading, setFading] = useState(false)
   const sliderRef = useRef<HTMLDivElement>(null)
 
-  const filtered: Product[] = activeTab === 'all' ? PRODUCTS : PRODUCTS.filter((p) => p.tab === activeTab)
+  const filtered: Product[] =
+    activeTab === 'all' ? PRODUCTS : PRODUCTS.filter((p) => p.tab === activeTab)
 
-  const switchTab = (val: string) => {
-    if (val === activeTab) return
+  const switchTab = (value: string) => {
+    if (value === activeTab) return
     setFading(true)
     setTimeout(() => {
-      setActiveTab(val)
+      setActiveTab(value)
       setFading(false)
       if (sliderRef.current) sliderRef.current.scrollLeft = 0
-    }, 250)
+    }, 180)
   }
 
-  const scroll = (dir: 'left' | 'right') => {
+  const scroll = (dir: -1 | 1) => {
     const el = sliderRef.current
     if (!el) return
     const card = el.querySelector<HTMLElement>('.product-card')
-    const cardW = card ? card.offsetWidth + 16 : 246
-    el.scrollBy({ left: dir === 'left' ? -cardW * 2 : cardW * 2, behavior: 'smooth' })
+    const step = card ? card.offsetWidth + 14 : 250
+    el.scrollBy({ left: dir * step * 2, behavior: 'smooth' })
   }
 
   return (
-    <section className="py-10 sm:py-[60px] bg-white" aria-label="Featured products">
-      {/* Header */}
-      <div className="max-w-[1300px] mx-auto px-4 sm:px-6 pb-4 sm:pb-5 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3 sm:gap-4 flex-wrap">
-        <div data-animate="fade-up">
-          <span className="inline-flex items-center text-[9px] sm:text-[10.5px] font-extrabold uppercase tracking-[.2em] text-brand-orange bg-[rgba(255,140,0,.08)] border border-[rgba(255,140,0,.2)] px-3 sm:px-[14px] py-1 sm:py-[5px] rounded-full mb-1.5 sm:mb-2 w-fit">
-            Handpicked
-          </span>
-          <h2 className="font-display text-[22px] sm:text-[28px] md:text-[34px] lg:text-[38px] font-black leading-[1.15] text-gray-900 md:mt-0 mt-1">
-            Featured <em className="not-italic text-brand-red">Products</em>
-          </h2>
-        </div>
-        <Link href="/shop" className="inline-flex items-center gap-[5px] text-[12px] sm:text-[13px] font-bold text-brand-red px-4 sm:px-[18px] py-0.5 sm:py-2 rounded-full hover:bg-[rgba(180,34,37,.06)] transition-colors whitespace-nowrap self-start sm:self-center">
-          View All <FontAwesomeIcon icon={faArrowRight} className="text-[10px] sm:text-[12px]" />
-        </Link>
-      </div>
+    <section className="relative bg-white pt-14 sm:pt-20" aria-label="Featured products">
+      <div className="mx-auto max-w-[1240px] px-5 sm:px-8">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+          <div data-animate="fade-up">
+            <p className="text-[10.5px] font-semibold uppercase tracking-[.18em] text-ink/35">
+              Student picks
+            </p>
+            <h2 className="mt-2.5 text-balance font-display text-[30px] font-medium leading-[1.05] tracking-[-0.03em] sm:text-[40px]">
+              Handpicked for
+              <br className="hidden sm:block" /> campus life
+            </h2>
+          </div>
 
-      {/* Tabs */}
-      <div className="max-w-[1300px] mx-auto px-4 sm:px-6 mb-5 sm:mb-6 overflow-x-auto no-scrollbar" role="tablist" aria-label="Filter products">
-        <div className="flex gap-1.5 sm:gap-2 w-max py-[3px]">
-          {TABS.map(({ label, value }) => (
-            <button
-              key={value}
-              role="tab"
-              aria-selected={activeTab === value}
-              onClick={() => switchTab(value)}
-              className={`px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-[13px] font-bold transition-all whitespace-nowrap font-body ${
-                activeTab === value
-                  ? 'bg-brand-gradient text-white shadow-[0_4px_14px_rgba(180,34,37,.3)]'
-                  : 'text-gray-500 bg-gray-100 hover:text-brand-red hover:bg-[rgba(180,34,37,.06)]'
-              }`}
+          <div className="flex items-center gap-2" data-animate="fade-up" data-delay="80">
+            <Link
+              href="/shop"
+              className="mr-1 hidden items-center gap-1.5 rounded-full px-3 py-2 text-[12px] font-semibold text-ink/60 transition-colors hover:bg-sand hover:text-ink sm:inline-flex"
             >
-              {label}
+              View all
+              <FontAwesomeIcon icon={faArrowRight} className="text-[9px]" />
+            </Link>
+            <button onClick={() => scroll(-1)} aria-label="Scroll products left" className={roundBtn}>
+              <FontAwesomeIcon icon={faArrowLeft} className="text-[11px]" />
             </button>
-          ))}
+            <button onClick={() => scroll(1)} aria-label="Scroll products right" className={roundBtn}>
+              <FontAwesomeIcon icon={faArrowRight} className="text-[11px]" />
+            </button>
+          </div>
         </div>
-      </div>
 
-      {/* Slider */}
-      <div className="relative max-w-[1300px] mx-auto px-8 sm:px-[52px]">
-        <button
-          onClick={() => scroll('left')}
-          className="absolute -left-2 sm:left-[6px] top-1/2 -translate-y-1/2 w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-white border border-gray-200 text-gray-700 flex items-center justify-center text-[11px] sm:text-[13px] shadow-brand hover:bg-brand-red hover:border-brand-red hover:text-white hover:shadow-[0_4px_14px_rgba(180,34,37,.3)] transition-all z-10"
-          aria-label="Scroll products left"
+        {/* Filter chips */}
+        <div
+          className="no-scrollbar mt-6 overflow-x-auto pb-1"
+          role="tablist"
+          aria-label="Filter featured products"
         >
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </button>
-
-        <div ref={sliderRef} className="overflow-x-auto overflow-y-visible no-scrollbar pb-4" style={{ scrollBehavior: 'smooth' }}>
-          <div
-            className="flex gap-3 sm:gap-4 py-1 px-0.5 pb-2"
-            role="list"
-            aria-label="Featured products"
-            style={{ opacity: fading ? 0 : 1, transform: fading ? 'translateY(8px)' : 'none', transition: 'opacity .25s, transform .25s' }}
-          >
-            {filtered.map((product) => (
-              <div key={product.id} className="flex-shrink-0 w-auto">
-                <ProductCard product={product} />
-              </div>
+          <div className="flex w-max items-center gap-1.5">
+            {TABS.map(({ label, value }) => (
+              <button
+                key={value}
+                role="tab"
+                aria-selected={activeTab === value}
+                onClick={() => switchTab(value)}
+                className={`whitespace-nowrap rounded-full px-3.5 py-2 text-[11.5px] font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/25 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
+                  activeTab === value
+                    ? 'bg-ink text-white'
+                    : 'bg-sand text-ink/50 hover:text-ink/80'
+                }`}
+              >
+                {label}
+              </button>
             ))}
           </div>
         </div>
 
-        <button
-          onClick={() => scroll('right')}
-          className="absolute -right-2 sm:right-[6px] top-1/2 -translate-y-1/2 w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-white border border-gray-200 text-gray-700 flex items-center justify-center text-[11px] sm:text-[13px] shadow-brand hover:bg-brand-red hover:border-brand-red hover:text-white hover:shadow-[0_4px_14px_rgba(180,34,37,.3)] transition-all z-10"
-          aria-label="Scroll products right"
-        >
-          <FontAwesomeIcon icon={faChevronRight} />
-        </button>
+        <div className="relative mt-4">
+          <div
+            ref={sliderRef}
+            className="no-scrollbar overflow-x-auto overflow-y-visible pb-3"
+            style={{ scrollBehavior: 'smooth' }}
+          >
+            <div
+              className="flex gap-3.5"
+              role="list"
+              aria-label="Featured products"
+              style={{
+                opacity: fading ? 0 : 1,
+                transform: fading ? 'translateY(6px)' : 'none',
+                transition: 'opacity .2s ease, transform .2s ease',
+              }}
+            >
+              {filtered.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-5 flex items-center justify-between border-t border-ink/[.06] pt-4">
+          <p className="text-[11px] text-ink/40">
+            Prices in naira · delivery calculated at checkout
+          </p>
+          <Link
+            href="/shop"
+            className="inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-ink/60 transition-colors hover:text-ink sm:hidden"
+          >
+            View all
+            <FontAwesomeIcon icon={faArrowRight} className="text-[9px]" />
+          </Link>
+        </div>
       </div>
+
+      <WaveDivider fill="#FBEFE3" className="mt-12 sm:mt-16" />
     </section>
   )
 }

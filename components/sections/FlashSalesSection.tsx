@@ -1,125 +1,244 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBolt, faBagShopping, faArrowRight, faCheck } from '@fortawesome/free-solid-svg-icons'
+import {
+  faArrowLeft,
+  faArrowRight,
+  faBagShopping,
+  faBolt,
+  faCheck,
+} from '@fortawesome/free-solid-svg-icons'
 import { useCountdown } from '@/hooks/useCountdown'
 import { FLASH_PRODUCTS } from '@/data'
 import { showToast } from '@/components/ui/toast'
 import { CART_EVENT } from '@/components/layout/Header'
+import WaveDivider from '@/components/ui/WaveDivider'
 
 let globalCartCount = 0
 
+const roundBtn =
+  'flex h-9 w-9 items-center justify-center rounded-full bg-white text-ink/50 ring-1 ring-ink/10 transition-all duration-200 hover:bg-ink hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/25 focus-visible:ring-offset-2 focus-visible:ring-offset-white'
+
 export default function FlashSalesSection() {
   const { hours, mins, secs } = useCountdown()
+  const [active, setActive] = useState(0)
   const [addedIds, setAddedIds] = useState<Set<number>>(new Set())
-  const barsRef = useRef<HTMLDivElement>(null)
-  const [barsAnimated, setBarsAnimated] = useState(false)
 
-  // Animate progress bars on scroll into view
-  useEffect(() => {
-    const el = barsRef.current
-    if (!el) return
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setBarsAnimated(true)
-          obs.disconnect()
-        }
-      },
-      { threshold: 0.4 }
-    )
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
+  const product = FLASH_PRODUCTS[active]
+  const added = addedIds.has(product.id)
 
-  const handleAddToCart = (id: number, name: string) => {
+  const handleAddToCart = (id: number) => {
     setAddedIds((prev) => new Set([...prev, id]))
     globalCartCount++
     window.dispatchEvent(new CustomEvent(CART_EVENT, { detail: globalCartCount }))
     showToast('Added to cart 🛍️', 'success')
     setTimeout(() => {
-      setAddedIds((prev) => { const next = new Set(prev); next.delete(id); return next })
+      setAddedIds((prev) => {
+        const next = new Set(prev)
+        next.delete(id)
+        return next
+      })
     }, 1600)
   }
 
-  return (
-    <section className="py-8 sm:py-[52px] bg-white" aria-label="Flash sales">
-      <div className="max-w-[1300px] mx-auto px-4 sm:px-6">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 flex-wrap mb-5 sm:mb-6">
-          <div className="flex items-center gap-[10px] flex-1 min-w-0 w-full sm:w-auto">
-            <span className="w-[32px] sm:w-[38px] h-[32px] sm:h-[38px] rounded-[12px] sm:rounded-[14px] bg-brand-gradient text-white flex items-center justify-center text-[15px] sm:text-[17px] shadow-orange-glow animate-bolt-pulse flex-shrink-0">
-              <FontAwesomeIcon icon={faBolt} />
-            </span>
-            <h2 className="font-display text-xl sm:text-2xl font-black text-gray-900">Flash Sales</h2>
-            <span className="bg-[#22c55e] text-white text-[8px] sm:text-[9.5px] font-extrabold px-[7px] sm:px-[9px] py-[2px] sm:py-[3px] rounded-full tracking-[.1em] animate-live-pulse flex-shrink-0" aria-label="Sale is live">LIVE</span>
-          </div>
+  const go = (dir: 1 | -1) =>
+    setActive((prev) => (prev + dir + FLASH_PRODUCTS.length) % FLASH_PRODUCTS.length)
 
-          {/* Countdown */}
-          <div className="flex items-center gap-[8px] sm:gap-[10px] flex-shrink-0" aria-label="Time remaining">
-            <span className="text-[11px] sm:text-[12px] font-semibold text-gray-500">Ends in:</span>
-            <div className="flex items-center gap-[2px] sm:gap-[3px]">
-              {[{ val: hours, label: 'hrs' }, { val: mins, label: 'min' }, { val: secs, label: 'sec' }].map(({ val, label }, i) => (
-                <div key={label} className="flex items-center gap-[2px] sm:gap-[3px]">
-                  {i > 0 && <span className="font-mono text-[16px] sm:text-[18px] font-bold text-brand-orange animate-colon-blink" aria-hidden="true">:</span>}
-                  <div className="flex flex-col items-center bg-gray-900 rounded-[6px] sm:rounded-[7px] px-[6px] sm:px-[9px] py-[2px] sm:py-1 min-w-[36px] sm:min-w-[42px]">
-                    <strong className="font-mono text-[15px] sm:text-[17px] text-white leading-none">{val}</strong>
-                    <span className="text-[7px] sm:text-[8px] text-gray-400 uppercase tracking-[.1em] mt-[1px] sm:mt-[2px]">{label}</span>
+  return (
+    <section className="relative bg-sky pt-14 sm:pt-20" aria-label="Flash sales">
+      <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
+        <div className="text-center" data-animate="fade-up">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/70 px-3 py-1.5 text-[10.5px] font-semibold text-ink/60 ring-1 ring-ink/[.05]">
+            <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-brand-orange" aria-hidden="true" />
+            Live now
+          </span>
+          <h2 className="mt-4 text-balance font-display text-[31px] font-medium leading-[1.06] tracking-[-0.03em] sm:text-[42px]">
+            Deals that move fast
+          </h2>
+          <p className="mx-auto mt-3 max-w-[440px] text-pretty text-[12.5px] leading-[1.75] text-ink/55 sm:text-[13.5px]">
+            Deep student discounts, refreshed daily. When the timer hits zero, the price
+            goes back up.
+          </p>
+        </div>
+
+        <div className="mt-8 grid items-start gap-3.5 lg:mt-10 lg:grid-cols-[320px_minmax(0,1fr)]">
+          {/* Countdown + lineup */}
+          <div className="rounded-[26px] bg-ink p-5 text-white sm:p-6">
+            <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[.16em] text-white/40">
+              <FontAwesomeIcon icon={faBolt} className="text-[9px]" />
+              Ends today
+            </div>
+
+            <div className="mt-4 flex items-end gap-1.5">
+              {[
+                { value: hours, label: 'hrs' },
+                { value: mins, label: 'min' },
+                { value: secs, label: 'sec' },
+              ].map(({ value, label }, i) => (
+                <div key={label} className="flex items-end gap-1.5">
+                  {i > 0 && (
+                    <span className="pb-2.5 font-mono text-[16px] text-white/25" aria-hidden="true">
+                      :
+                    </span>
+                  )}
+                  <div className="rounded-xl bg-white/[.07] px-2.5 py-2 text-center sm:px-3">
+                    <span className="block font-mono text-[24px] leading-none tracking-tight sm:text-[26px]">
+                      {value}
+                    </span>
+                    <span className="mt-1.5 block text-[8.5px] uppercase tracking-[.14em] text-white/35">
+                      {label}
+                    </span>
                   </div>
                 </div>
               ))}
             </div>
+
+            <div className="mt-6 border-t border-white/10 pt-4">
+              <p className="text-[9.5px] font-semibold uppercase tracking-[.16em] text-white/35">
+                Today&apos;s lineup
+              </p>
+              <ul className="mt-2 space-y-0.5">
+                {FLASH_PRODUCTS.map((item, i) => (
+                  <li key={item.id}>
+                    <button
+                      onClick={() => setActive(i)}
+                      aria-pressed={i === active}
+                      className={`flex w-full items-center justify-between gap-2 rounded-xl px-2.5 py-2.5 text-left text-[11.5px] transition-colors duration-200 ${
+                        i === active
+                          ? 'bg-white/10 text-white'
+                          : 'text-white/45 hover:bg-white/5 hover:text-white/70'
+                      }`}
+                    >
+                      <span className="truncate">{item.name}</span>
+                      <span className="shrink-0 font-mono text-[10px] text-white/45">
+                        ₦{(item.price / 1000).toFixed(0)}k
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <Link
+              href="/flash-sales"
+              className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 text-[12px] font-semibold text-ink transition-colors duration-200 hover:bg-mint"
+            >
+              View all flash deals
+              <FontAwesomeIcon icon={faArrowRight} className="text-[9px]" />
+            </Link>
           </div>
 
-          <Link href="/flash-sales" className="inline-flex items-center gap-[5px] text-[12px] sm:text-[13px] font-bold text-brand-red whitespace-nowrap hover:gap-[9px] transition-all" aria-label="View all flash sales">
-            View All <FontAwesomeIcon icon={faArrowRight} />
-          </Link>
-        </div>
+          {/* Showcase */}
+          <div className="rounded-[26px] bg-white p-4 sm:p-5">
+            <div className="grid gap-4 sm:grid-cols-2 sm:items-center sm:gap-5">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] bg-sand sm:aspect-square">
+                <Image
+                  key={product.image}
+                  src={product.image}
+                  alt={product.alt}
+                  fill
+                  sizes="(max-width: 640px) 90vw, 320px"
+                  className="animate-fade-in object-cover"
+                />
+                <span className="absolute left-3 top-3 rounded-full bg-ink px-2.5 py-1 text-[10px] font-semibold text-white">
+                  −{product.discount}%
+                </span>
+              </div>
 
-        {/* Grid */}
-        <div ref={barsRef} className="grid grid-cols-2 xs:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4" role="list" aria-label="Flash sale products">
-          {FLASH_PRODUCTS.map((p) => {
-            const added = addedIds.has(p.id)
-            return (
-              <article key={p.id} className="rounded-[12px] sm:rounded-[14px] bg-white border border-gray-200 overflow-hidden hover:-translate-y-1 hover:shadow-brand-md transition-all duration-250" role="listitem">
-                <Link href={`/product/${p.id}`} className="relative block aspect-[4/3] overflow-hidden" aria-label={p.name}>
-                  <Image src={p.image} alt={p.alt} fill className="object-cover transition-transform duration-500 hover:scale-[1.06]" sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw" />
-                  <span className="absolute top-2 left-2 bg-brand-red text-white text-[9px] sm:text-[10.5px] font-extrabold px-1.5 sm:px-2 py-[2px] sm:py-[3px] rounded-full">-{p.discount}%</span>
-                  <div className="absolute inset-0 bg-black/42 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                    <span className="text-white text-[10px] sm:text-[11.5px] font-bold bg-white/15 backdrop-blur-[8px] px-3 sm:px-[14px] py-1.5 sm:py-[6px] rounded-full border border-white/30">Quick View</span>
-                  </div>
-                </Link>
-                <div className="p-2 sm:p-[11px]">
-                  <h3 className="text-[11px] sm:text-[12.5px] font-bold mb-[5px] sm:mb-[6px] leading-[1.35]">
-                    <Link href={`/product/${p.id}`} className="text-gray-900 hover:text-brand-red transition-colors line-clamp-2">{p.name}</Link>
-                  </h3>
-                  <div className="flex items-center gap-[4px] sm:gap-[6px] mb-1.5 sm:mb-2 flex-wrap">
-                    <span className="text-[13px] sm:text-[15px] font-extrabold text-brand-red">₦{p.price.toLocaleString()}</span>
-                    <span className="text-[9px] sm:text-[11px] text-gray-400"><del>₦{p.oldPrice.toLocaleString()}</del></span>
-                  </div>
-                  <div className="bg-gray-200 rounded-full h-1 overflow-hidden mb-1" role="progressbar" aria-valuenow={p.sold} aria-valuemin={0} aria-valuemax={100}>
+              <div>
+                <p className="text-[9.5px] font-semibold uppercase tracking-[.16em] text-ink/35">
+                  Flash deal
+                </p>
+                <h3 className="mt-1.5 text-balance font-display text-[19px] font-medium leading-snug tracking-[-0.015em] sm:text-[21px]">
+                  {product.name}
+                </h3>
+
+                <div className="mt-3 flex items-baseline gap-2">
+                  <span className="text-[21px] font-semibold tracking-tight text-ink">
+                    ₦{product.price.toLocaleString()}
+                  </span>
+                  <span className="text-[11.5px] text-ink/35 line-through">
+                    ₦{product.oldPrice.toLocaleString()}
+                  </span>
+                </div>
+
+                <div className="mt-4">
+                  <div
+                    className="h-1.5 overflow-hidden rounded-full bg-sand"
+                    role="progressbar"
+                    aria-valuenow={product.sold}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-label={`${product.sold}% claimed`}
+                  >
                     <div
-                      className="h-full rounded-full bg-brand-gradient transition-[width] duration-500 ease-out"
-                      style={{ width: barsAnimated ? `${p.sold}%` : '0%' }}
+                      className="h-full rounded-full bg-ink transition-[width] duration-700 ease-out"
+                      style={{ width: `${product.sold}%` }}
                     />
                   </div>
-                  <p className="text-[9px] sm:text-[10px] text-gray-500 mb-2 sm:mb-[10px]">{p.sold}% sold</p>
-                  <button
-                    onClick={() => handleAddToCart(p.id, p.name)}
-                    aria-label={`Add ${p.name} to cart`}
-                    className={`w-full flex items-center justify-center gap-1.5 px-2 py-1.5 sm:py-2 rounded-[7px] sm:rounded-[8px] text-[11px] sm:text-[12px] font-bold transition-all font-body ${added ? 'bg-[#22c55e] text-white' : 'bg-gray-100 text-gray-900 hover:bg-brand-gradient hover:text-white'}`}
-                  >
-                    <FontAwesomeIcon icon={added ? faCheck : faBagShopping} className="text-[10px] sm:text-[11px]" />
-                    {added ? 'Added!' : 'Add to Cart'}
-                  </button>
+                  <p className="mt-1.5 text-[10.5px] text-ink/40">
+                    {product.sold}% claimed · {100 - product.sold}% left
+                  </p>
                 </div>
-              </article>
-            )
-          })}
+
+                <button
+                  onClick={() => handleAddToCart(product.id)}
+                  aria-label={`Add ${product.name} to cart`}
+                  className={`mt-4 flex w-full items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-[12px] font-semibold transition-colors duration-200 ${
+                    added ? 'bg-mint text-ink' : 'bg-ink text-white hover:bg-ink/85'
+                  }`}
+                >
+                  <FontAwesomeIcon icon={added ? faCheck : faBagShopping} className="text-[10px]" />
+                  {added ? 'Added to cart' : 'Add to cart'}
+                </button>
+
+                <div className="mt-3 flex items-center justify-between">
+                  <div className="flex gap-1.5">
+                    <button onClick={() => go(-1)} aria-label="Previous flash deal" className={roundBtn}>
+                      <FontAwesomeIcon icon={faArrowLeft} className="text-[10px]" />
+                    </button>
+                    <button onClick={() => go(1)} aria-label="Next flash deal" className={roundBtn}>
+                      <FontAwesomeIcon icon={faArrowRight} className="text-[10px]" />
+                    </button>
+                  </div>
+                  <span className="font-mono text-[10.5px] text-ink/30">
+                    {active + 1} / {FLASH_PRODUCTS.length}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Thumbnails */}
+            <div className="mt-4 grid grid-cols-4 gap-1.5 sm:gap-2">
+              {FLASH_PRODUCTS.map((item, i) => (
+                <button
+                  key={item.id}
+                  onClick={() => setActive(i)}
+                  aria-label={`Show ${item.name}`}
+                  aria-pressed={i === active}
+                  className={`relative aspect-[4/3] overflow-hidden rounded-xl transition-all duration-200 ${
+                    i === active
+                      ? 'ring-2 ring-ink'
+                      : 'opacity-55 ring-1 ring-ink/10 hover:opacity-100'
+                  }`}
+                >
+                  <Image
+                    src={item.image}
+                    alt={item.alt}
+                    fill
+                    sizes="120px"
+                    className="object-cover"
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
+
+      <WaveDivider fill="#FFFFFF" className="mt-12 sm:mt-16" />
     </section>
   )
 }

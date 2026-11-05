@@ -1,49 +1,92 @@
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTruckFast, faGraduationCap, faCamera, faHouse, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import {
+  faTruckFast,
+  faGraduationCap,
+  faCamera,
+  faHouse,
+  faArrowRight,
+} from '@fortawesome/free-solid-svg-icons'
 
 const services = [
-  { icon: faTruckFast, color: '#ff8c00', title: 'Campus Delivery', desc: 'Lightning-fast delivery anywhere on campus. Real-time tracking, guaranteed timings.', href: '/logistics', cta: 'Explore' },
-  { icon: faGraduationCap, color: '#b42225', title: 'Tutoring & Education', desc: 'Connect with top students for tutoring in any subject. Affordable, flexible, effective.', href: '/services', cta: 'Find Tutors' },
-  { icon: faCamera, color: '#8b5cf6', title: 'Photography & Media', desc: 'Book campus photographers for portraits, events, and content creation at student rates.', href: '/services', cta: 'Book Now' },
-  { icon: faHouse, color: '#10b981', title: 'Accommodation', desc: 'Find verified hostels, apartments, and short-let accommodation near your campus.', href: '/accommodations', cta: 'Find Housing' },
+  {
+    icon: faTruckFast,
+    title: 'Campus delivery',
+    desc: 'Fast, tracked delivery to any hostel, faculty or hall on campus.',
+    href: '/logistics',
+    cta: 'See delivery zones',
+    bg: 'bg-sky',
+  },
+  {
+    icon: faGraduationCap,
+    title: 'Tutoring',
+    desc: 'Book top students for 1-on-1 help in any course, at student rates.',
+    href: '/services',
+    cta: 'Find a tutor',
+    bg: 'bg-mint',
+  },
+  {
+    icon: faCamera,
+    title: 'Photography',
+    desc: 'Campus photographers for portraits, events and content days.',
+    href: '/services',
+    cta: 'Book a shoot',
+    bg: 'bg-lilac',
+  },
+  {
+    icon: faHouse,
+    title: 'Accommodation',
+    desc: 'Verified hostels, apartments and short lets close to campus.',
+    href: '/accommodations',
+    cta: 'Find housing',
+    bg: 'bg-peach',
+  },
 ]
 
 export default function ServicesSection() {
   return (
-    <section className="py-[60px] bg-[#FFF8F5]" aria-label="Campus services">
-      <div className="max-w-[1400px] mx-auto px-6 pb-9 text-center" data-animate="fade-up">
-        <div className="inline-flex items-center text-[10.5px] font-extrabold uppercase tracking-[.2em] text-brand-orange bg-[rgba(255,140,0,.08)] border border-[rgba(255,140,0,.2)] px-[14px] py-[5px] rounded-full mb-3">
-          Beyond Shopping
+    <section className="bg-sand pb-14 pt-14 sm:pb-20 sm:pt-20" aria-label="Campus services">
+      <div className="mx-auto max-w-[1240px] px-5 sm:px-8">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div data-animate="fade-up">
+            <p className="text-[10.5px] font-semibold uppercase tracking-[.18em] text-ink/35">
+              Beyond shopping
+            </p>
+            <h2 className="mt-2.5 text-balance font-display text-[30px] font-medium leading-[1.05] tracking-[-0.03em] sm:text-[40px]">
+              More than a marketplace
+            </h2>
+          </div>
+          <p className="max-w-[300px] text-[12px] leading-[1.7] text-ink/45" data-animate="fade-up" data-delay="80">
+            Services that make campus life easier — booked and paid in the same place.
+          </p>
         </div>
-        <h2 className="font-display text-[clamp(24px,3vw,38px)] font-black leading-[1.15] text-gray-900 mb-[10px]">
-          Services &amp; <em className="not-italic text-brand-red">Logistics</em>
-        </h2>
-        <p className="text-[14.5px] text-gray-500 max-w-[520px] mx-auto leading-[1.75]">
-          JOVO is more than a marketplace. We power campus life.
-        </p>
-      </div>
 
-      <div className="max-w-[1300px] mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {services.map(({ icon, color, title, desc, href, cta }) => (
-          <article
-            key={title}
-            className="service-card relative bg-white border border-gray-200 rounded-[28px] px-[22px] py-7 text-center hover:-translate-y-1 hover:shadow-brand-md transition-all duration-250 overflow-hidden"
-          >
-            <div
-              className="w-14 h-14 rounded-[20px] mx-auto mb-4 flex items-center justify-center text-[22px] group-hover:scale-110 transition-transform"
-              style={{ background: `${color}1f`, color }}
-              aria-hidden="true"
+        <div className="mt-7 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
+          {services.map(({ icon, title, desc, href, cta, bg }, i) => (
+            <article
+              key={title}
+              className={`group flex flex-col rounded-[24px] ${bg} p-5 transition-transform duration-300 hover:-translate-y-1`}
+              data-animate="fade-up"
+              data-delay={i * 70}
             >
-              <FontAwesomeIcon icon={icon} />
-            </div>
-            <h3 className="text-[15px] font-extrabold text-gray-900 mb-2">{title}</h3>
-            <p className="text-[13px] text-gray-500 leading-[1.7] mb-4">{desc}</p>
-            <Link href={href} className="inline-flex items-center gap-[5px] text-[13px] font-bold text-brand-red hover:gap-[9px] transition-all">
-              {cta} <FontAwesomeIcon icon={faArrowRight} />
-            </Link>
-          </article>
-        ))}
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/70 text-[12px] text-ink/70">
+                <FontAwesomeIcon icon={icon} aria-hidden="true" />
+              </span>
+              <h3 className="mt-4 text-[13.5px] font-semibold tracking-tight text-ink">{title}</h3>
+              <p className="mt-1.5 flex-1 text-[11.5px] leading-[1.65] text-ink/55">{desc}</p>
+              <Link
+                href={href}
+                className="mt-4 inline-flex items-center gap-1.5 text-[11px] font-semibold text-ink/70 transition-colors hover:text-ink"
+              >
+                {cta}
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  className="text-[8px] transition-transform duration-200 group-hover:translate-x-0.5"
+                />
+              </Link>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   )
